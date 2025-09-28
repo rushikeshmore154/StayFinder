@@ -1,0 +1,129 @@
+<% layout('layouts/boilerplate') -%>
+
+    <body>
+
+        <div
+            style="max-width: 600px; margin: 30px auto; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); overflow: hidden; font-family: Arial, sans-serif;">
+            <img src="<%=place.image.url%>" alt="<%=place.title%>" style="width:100%; height:320px; object-fit:cover;">
+            <div style="padding: 24px;">
+                <h3 style="margin-top:0; margin-bottom: 10px; color: #333;">
+                    <%=place.title%>
+                </h3>
+                <p >
+                    owned by: <%= place.owner.username %>
+                </p>
+                <p style="margin: 0 0 12px 0; color: #666;">
+                    <%=place.description%>
+                </p>
+                <div style="margin-bottom: 8px;">
+                    <strong>Location:</strong>
+                    <%=place.location%>
+                </div>
+                <div style="margin-bottom: 8px;">
+                    <strong>Price:</strong> $<%=place.price%> / night
+                </div>
+                <div>
+                    <strong>country:</strong>
+                    <%=place.country%>
+                </div>
+            </div>
+       
+      
+            <div style="display: flex; gap: 10px; padding: 0 24px 24px 24px;">
+                <form action="/Listings/<%=place._id%>/edit" method="get" style="margin: 0;">
+                    <button
+                        style="background: red; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">Edit</button>
+                </form>
+                <form action="/Listings/<%=place._id%>/delete?_method=delete" method="post" style="margin: 0;">
+                    <button
+                        style="background: red; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">Delete</button>
+                </form>
+            </div>
+        </div>
+
+        <div class=" col-8 offset-3 align-items-center mb-4 ">
+            <hr>
+            <% if(currUser){ %>
+            <h2>Rate this place</h2>
+
+            <form action="/review/<%=place._id%>/rating" method="post" style="max-width: 400px;" novalidate
+                class="needs-validation" id="ratingForm">
+                <div class="mb-3">
+                    <label for="rating" class="form-label">Rating:</label>
+                    <fieldset class="starability-slot">
+                 
+                        <input type="radio" id="no-rate" class="input-no-rate" name="rating[rating]" value="1" checked
+                            aria-label="No rating." />
+                        <input type="radio" id="first-rate1" name="rating[rating]" value="1" />
+                        <label for="first-rate1" title="Terrible">1 star</label>
+                        <input type="radio" id="first-rate2" name="rating[rating]" value="2" />
+                        <label for="first-rate2" title="Not good">2 stars</label>
+                        <input type="radio" id="first-rate3" name="rating[rating]" value="3" />
+                        <label for="first-rate3" title="Average">3 stars</label>
+                        <input type="radio" id="first-rate4" name="rating[rating]" value="4" />
+                        <label for="first-rate4" title="Very good">4 stars</label>
+                        <input type="radio" id="first-rate5" name="rating[rating]" value="5" />
+                        <label for="first-rate5" title="Amazing">5 stars</label>
+                    </fieldset>
+                </div>
+
+                <div class="mb-3">
+                    <label for="comment" class="form-label">Comment:</label>
+                    <textarea id="comment" class="form-control" name="rating[comment]" rows="3"
+                        placeholder="Leave a comment..." required></textarea>
+                    <div class="invalid-feedback">
+                        Please submit a comment for review.
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit Rating</button>
+            </form>
+            <% } %>
+        </div>
+      
+        <div class="reviews-container">
+            <% if (place.reviews && place.reviews.length> 0) { %>
+                <h3 class="text-center mb-4">User Reviews</h3>
+                <div class="row row-cols-1 row-cols-md-2 g-3">
+                    <% for (let review of place.reviews) { %>
+                        <div class="col">
+                            <div class="card review-card h-100">
+                                <div class="card-body">
+                                    <div class="review-header">
+                                        <h5 class="card-title review-author">Created by:<%= review.author ? review.author.username : "Unknown User" %>
+</h5>
+           
+
+                                        <!-- <span class="review-rating">Rating: <%= review.rating %> / 5</span> -->
+                                        <p class="starability-result" data-rating="<%= review.rating %>">
+                                            Rated: 3 stars
+                                        </p>
+                                        </div>
+                                        <p class="card-text review-comment">
+                                            <%= review.comment %>
+                                    </p>
+                                    <div class="text-muted review-date">
+                                        <%= review.createdAt.toLocaleDateString('en-IN', { year: 'numeric' ,
+                                            month: 'long' , day: 'numeric' }) %>
+                                    </div>
+                                    <form method="POST" action="/review/<%= place._id %>/Listings/<%= review._id %>?_method=DELETE">
+                                        <button type="submit">Delete</button>
+
+
+                                    </form>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                </div>
+                <% } else { %>
+                    <p class="text-center">No reviews yet. Be the first to add one!</p>
+                    <% } %>
+        </div>
+
+
+
+
+    </body>

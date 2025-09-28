@@ -1,0 +1,158 @@
+
+/* 
+To apply styling to all elements on the page, use the universal selector: 
+*/
+
+/* 
+To style elements by class, use .classname { ... } 
+Example: 
+*/
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1030;
+    background-color: white;
+}
+
+.f-info-links a {
+    text-decoration: none;
+    color: #222;
+}
+
+.f-info-links a:hover {
+    text-decoration: underline;
+}
+
+.f-info-links,
+.f-info-socials,
+.f-info-brand {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.f-info-socials i {
+    font-size: 1.2rem;
+    margin-right: 1rem;
+}
+
+.f-info {
+    height: 8rem;
+    background-color: #ebebeb;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: space-evenly;
+    text-align: center;
+    font-size: 1.2rem;
+    margin-top: 4rem;
+}
+
+/* Cards */
+
+.listing-card {
+    border: none !important;
+    margin-bottom: 2rem;
+}
+
+.card-img-top {
+    border-radius: 1rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+
+.card-body {
+    padding: 0 !important;
+}
+
+.card-text p {
+    font-weight: 400 !important;
+}
+
+.listing-link {
+    text-decoration: none;
+}
+
+
+/* styling for reveiw */
+/* Reviews Container */
+.reviews-container {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    /* Box shadow is now mostly handled by Bootstrap's .card class, but you can add more if desired */
+    /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); */
+}
+
+/* Individual Review Card Styles (overriding/extending Bootstrap's .card) */
+/* We already applied .card and .h-100 in HTML */
+.review-card {
+    /* Bootstrap's .card already gives background, border, padding, and shadow */
+    /* You can override or add to it here */
+    
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Keep smooth transition for hover */
+    position: relative; /* Important for z-index and potential overlays */
+    z-index: 1; /* Default stacking context */
+}
+
+/* Hover Effect for Review Card */
+.review-card:hover {
+    transform: translateY(-5px); /* Lifts the card slightly */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2); /* More prominent shadow on hover */
+    z-index: 10; /* Bring hovered card to front */
+}
+
+/* Review Header (Author and Rating) - Adjustments for Bootstrap card-body context */
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+}
+
+.review-author {
+    margin: 0; /* Bootstrap's h5 might have margin-bottom */
+    font-size: 1.1em;
+    color: #555;
+}
+
+.review-rating {
+    font-size: 1em;
+    color: #007bff; /* A nice blue for rating */
+    font-weight: bold;
+}
+
+/* Review Comment */
+.review-comment {
+    font-size: 0.95em;
+    line-height: 1.6;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+/* Review Date */
+.review-date {
+    font-size: 0.85em;
+    color: #888;
+    display: block; 
+    text-align: right; 
+    margin-top: 10px; /* Add some space above the date */
+}
+
+/* Responsive Adjustments (Optional but Recommended) */
+/* Bootstrap's grid handles most responsiveness, but you can fine-tune specific elements */
+@media (max-width: 767.98px) { /* Bootstrap's small breakpoint */
+    .review-header {
+        flex-direction: column; /* Stack author and rating on small screens */
+        align-items: flex-start;
+    }
+    .review-rating {
+        margin-top: 5px;
+    }
+}
